@@ -42,11 +42,17 @@ class Tile{
         
         if(!this.annimated && this.motion == 0){//spawning animation
             this.address.style.animationName = "spawnAnimation";
-            this.address.style.animationDuration = "0.25s";
+            this.address.style.animationDuration = ".25s";
             this.annimated = true
         } else if(!this.annimated && this.motion == 1){//moving up animation
             this.address.style.animationName = "moveUp";
-            this.address.style.animationDuration = "0.175s";
+            this.address.style.animationDuration = ".25s";
+
+            this.motion = 0;
+            this.annimated = true;
+        } else if(!this.annimated && this.motion == 2){//moving up animation
+            this.address.style.animationName = "moveDown";
+            this.address.style.animationDuration = ".25s";
 
             this.motion = 0;
             this.annimated = true;
@@ -140,7 +146,7 @@ function playGame(dir){
                 }
             }
             break;
-        case 2:
+        case 2: //s
             for(let i = 3; i >= 0 ; i--){ //goes through all of the rows
                 for(let j = 3; j >=0; j--){
                     let tile = gameArray[j][i];
@@ -156,18 +162,18 @@ function playGame(dir){
                             continue;
                         }
                         if(gameArray[j][k].power == gameArray[j][k-1].power){
-                            gameArray[j][k].update(gameArray[j][k].power+1);
+                            gameArray[j][k].move(gameArray[j][k].power+1,2);
                             gameArray[j][k].merged = true;
                             gameArray[j][k-1].update(0);
                         } 
                         else if(gameArray[j][k].power != gameArray[j][k-1].power && gameArray[j][k].power != 0){
                             //console.log("placing @ " + j + " " + (k+1))
-                            gameArray[j][k-1].update(gameArray[j][k-1].power);
+                            gameArray[j][k-1].move(gameArray[j][k-1].power,2);
                             //gameArray[j][i].update(0);
                             break;
                         } else{
                             //console.log("placing @ " + j + " " + (k))
-                            gameArray[j][k].update(gameArray[j][k-1].power);
+                            gameArray[j][k].move(gameArray[j][k-1].power,2);
                             
                             gameArray[j][k-1].update(0);
                         } 
@@ -275,8 +281,8 @@ function playGame(dir){
 
 
 document.addEventListener("keydown", (e) => {
-    if(e.key == "w")playGame(1);
-    if(e.key == "s")playGame(2);
-    if(e.key == "a")playGame(3);
-    if(e.key == "d")playGame(4);
+    if(e.key.toLowerCase() == "w")playGame(1);
+    if(e.key.toLowerCase() == "s")playGame(2);
+    if(e.key.toLowerCase() == "a")playGame(3);
+    if(e.key.toLowerCase() == "d")playGame(4);
 })
