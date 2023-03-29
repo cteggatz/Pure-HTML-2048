@@ -4,6 +4,7 @@ class Tile{
         this.address = address;
         this.power = power;
         this.annimated = true;
+        this.motion = 0;
 
         const text = document.createElement('p');
         text.append(document.createTextNode(power));
@@ -38,19 +39,33 @@ class Tile{
         }
         
         
-        
-        if(!this.annimated){
+        if(!this.annimated && this.motion == 0){//spawning animation
             this.address.style.animationName = "spawnAnimation";
             this.address.style.animationDuration = "0.25s";
             this.annimated = true
+        } else if(!this.annimated && this.motion == 1){//moving up animation
+            this.address.style.animationName = "moveUp";
+            this.address.style.animationDuration = "0.175s";
+
+            this.motion = 0;
+            this.annimated = true;
         } else {
             this.address.style.animationName = "";
             this.address.style.animationDuration = "0s";
         }
+
+        //movement animation 
+
+
         this.power = power;
     }
     spawn(power){
         this.annimated = false;
+        this.update(power);
+    }
+    move(power, dir){
+        this.annimated = false;
+        this.motion = dir;
         this.update(power);
     }
 }
@@ -93,27 +108,22 @@ function playGame(dir){
             for(let i = 0; i < 4 ; i++){ //goes through all of the rows
                 for(let j = 3; j >=0; j--){
                     let tile = gameArray[j][i];
-                    if(tile.power == 0){
+                    if(tile.power == 0 || i == 0){
                         continue;
                     }
-
-                    if(i == 0 ) { continue}
-                    //console.log(j + "|" + i)
-                    
                     for(let k = i-1; k >= 0; k--){
-                        //console.log("tile in front " + j + " | " + k)
                         if(gameArray[j][k].power == gameArray[j][k+1].power){
-                            gameArray[j][k].update(gameArray[j][k].power+1);
+                            gameArray[j][k].move(gameArray[j][k].power+1,1);
                             gameArray[j][k+1].update(0);
                         } 
                         else if(gameArray[j][k].power != gameArray[j][k+1].power && gameArray[j][k].power != 0){
                             //console.log("placing @ " + j + " " + (k+1))
-                            gameArray[j][k+1].update(gameArray[j][k+1].power);
+                            gameArray[j][k+1].move(gameArray[j][k+1].power,1);
                             //gameArray[j][i].update(0);
                             break;
                         } else{
                             //console.log("placing @ " + j + " " + (k))
-                            gameArray[j][k].update(gameArray[j][k+1].power);
+                            gameArray[j][k].move(gameArray[j][k+1].power,1);
                             
                             gameArray[j][k+1].update(0);
                         } 
@@ -161,7 +171,7 @@ function playGame(dir){
                     
                     for(let k = j-1; k >= 0; k--){
                         if(gameArray[k][i].power == gameArray[k+1][i].power){
-                            gameArray[k][i].update(gameArray[k+1][i].power+1);
+                            gameArray[k][i].move(gameArray[k+1][i].power+1);
                             gameArray[k+1][i].update(0);
                         } else if(gameArray[k][i].power != gameArray[k+1][i].power && gameArray[k][i].power != 0){
                             gameArray[k+1][i].update(gameArray[k+1][i].power);
