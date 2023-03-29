@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048</title>
+    <style>
+        html{
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #99AC5D;
+        }
+        h1{
+            text-align: center;
+            font-size:8vh;
+        }
+        #game{
+            align-self: center;
+            width: 48vh;
+            height: 48vh;
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            background-color: #FEF9D7;
+        }
+        .tile{
+            background-color: #99AC5D;
+            width: 10vh;
+            height: 10vh;
+            margin: 1vh;
+            margin-bottom: 2vh;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+        p{
+            margin: 0;
+        }
+    </style>
+    
+</head>
+<body>
+    <H1 id="title">2048</H1>
+    <div id="game">
+        <div id="row1"></div>
+        <div id="row2"></div>
+        <div id="row3"></div>
+        <div id="row4"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
