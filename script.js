@@ -3,6 +3,7 @@ class Tile{
     constructor(address, power){
         this.address = address;
         this.power = power;
+        this.annimated = true;
 
         const text = document.createElement('p');
         text.append(document.createTextNode(power));
@@ -12,7 +13,7 @@ class Tile{
     }
 
     colorDict = {
-        0 : "#FEFCEB",
+        0 : "#FEFCEC",
         1 : "#F1D8BC",
         2 : "#EAC49A",
         3 : "#E3B178",
@@ -35,7 +36,22 @@ class Tile{
         } else {
             this.address.children[0].style.color = "black";
         }
+        
+        
+        
+        if(!this.annimated){
+            this.address.style.animationName = "spawnAnimation";
+            this.address.style.animationDuration = "0.25s";
+            this.annimated = true
+        } else {
+            this.address.style.animationName = "";
+            this.address.style.animationDuration = "0s";
+        }
         this.power = power;
+    }
+    spawn(power){
+        this.annimated = false;
+        this.update(power);
     }
 }
 
@@ -57,14 +73,14 @@ for(let j = 1; j<=4; j++){
 }
 
 //starts game by spawning two squares
-gameArray[Math.floor(Math.random()*4)][Math.floor(Math.random()*4)].update(1)
+gameArray[Math.floor(Math.random()*4)][Math.floor(Math.random()*4)].spawn(1)
 
 do{
     let x = Math.floor(Math.random()*4);
     let y = Math.floor(Math.random()*4);
     
     if(gameArray[x][y].power == 0){
-        gameArray[x][y].update(1);
+        gameArray[x][y].spawn(1);
         break;
     }
 }while(true);
@@ -209,7 +225,7 @@ function playGame(dir){
         let y = Math.floor(Math.random()*4);
         
         if(gameArray[x][y].power == 0){
-            gameArray[x][y].update(1);
+            gameArray[x][y].spawn(1);
             break;
         }
     }while(true);
