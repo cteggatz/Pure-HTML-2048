@@ -4,6 +4,6 @@ Also, excuse the bad animations, this is kinda by first time
 animating with css
 
 if you want to give it a try just:
- * download both files
+ * download folder
  * drag the index.html into what ever browser you want
  * have fun
