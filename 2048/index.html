@@ -11,12 +11,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #A6C680;
+            background-color: #C8E9F9;
         }
         h1{
             text-align: center;
             font-size:8vh;
-            color: azure;
+            color: #EE7158;
+            background-color: #F7F4F3;
+            border-style: solid;
+            border-color: #36382E;
         }
         #game{
             align-self: center;
@@ -25,7 +28,10 @@
             text-align: center;
             justify-content: center;
             display: flex;
-            background-color: #FDF9D8;
+            background-color: #EFE9E7;
+            border-style: solid;
+            border-color: #36382E;
+            
         }
         .tile{
             background-color: #99AC5D;
@@ -96,6 +102,41 @@
             }
             
         }
+        #misc{
+            margin-top: 3vh;
+            border-style: solid;
+            border-color: #36382E;
+            background-color: #F7F4F3;
+            height: 12vh;
+        }
+        #reset{
+            float: left;
+            margin: 2vh;
+            margin-left: 3vh;
+            height: 8vh;
+            width: 14vh;
+            background-color: #EE7158;
+            border-color: #EE7158;
+            border-style: solid;
+        }
+        #reset:hover{
+            background-color: #EB5133;
+            border-color: #EB5133;
+        }
+        #scoreBoard{
+            justify-content: center;
+            margin: 2vh;
+            padding-top: .5vh;
+            padding-bottom: .5vh;
+            font-size: 2vh;
+            margin-right: 3vh;
+            float: right;
+            width: 20vh;
+            height: 6vh;
+            border-color: #36382E;
+            border-style: solid;
+        }
+
 
     </style>
     
@@ -107,6 +148,14 @@
         <div id="row2"></div>
         <div id="row3"></div>
         <div id="row4"></div>
+    </div>
+    <div id="misc">
+        <button id="reset">reset</button>
+        <div id = "scoreBoard">
+            <p style="padding-top: .75vh;"><b>Score:</b></p>
+            <p id="score">0</p>
+        </div>
+        
     </div>
     <script src="script.js"></script>
 </body>
