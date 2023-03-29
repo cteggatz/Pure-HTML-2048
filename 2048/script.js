@@ -2,6 +2,7 @@
 class Tile{
     constructor(address, power){
         this.address = address;
+        this.merged = false;
         this.power = power;
         this.annimated = true;
         this.motion = 0;
@@ -68,6 +69,7 @@ class Tile{
         this.motion = dir;
         this.update(power);
     }
+    
 }
 
 
@@ -112,8 +114,15 @@ function playGame(dir){
                         continue;
                     }
                     for(let k = i-1; k >= 0; k--){
+                        console.log(gameArray[j][k+1].merged)
+                        if(gameArray[j][k+1].merged == true || gameArray[j][k].merged == true){
+                            gameArray[j][k+1].merged = false;
+                            gameArray[j][k].merged = false;
+                            continue;
+                        }
                         if(gameArray[j][k].power == gameArray[j][k+1].power){
                             gameArray[j][k].move(gameArray[j][k].power+1,1);
+                            gameArray[j][k].merged = true;
                             gameArray[j][k+1].update(0);
                         } 
                         else if(gameArray[j][k].power != gameArray[j][k+1].power && gameArray[j][k].power != 0){
@@ -135,17 +144,20 @@ function playGame(dir){
             for(let i = 3; i >= 0 ; i--){ //goes through all of the rows
                 for(let j = 3; j >=0; j--){
                     let tile = gameArray[j][i];
-                    if(tile.power == 0){
+                    if(tile.power == 0 || i == 3){
                         continue;
                     }
-
-                    if(i == 3 ) { continue}
-                    //console.log(j + "|" + i)
+                    
                     
                     for(let k = i+1; k <4; k++){
-                        //console.log("tile in front " + j + " | " + k)
+                        if(gameArray[j][k-1].merged == true || gameArray[j][k].merged == true){
+                            gameArray[j][k-1].merged = false;
+                            gameArray[j][k].merged = false;
+                            continue;
+                        }
                         if(gameArray[j][k].power == gameArray[j][k-1].power){
                             gameArray[j][k].update(gameArray[j][k].power+1);
+                            gameArray[j][k].merged = true;
                             gameArray[j][k-1].update(0);
                         } 
                         else if(gameArray[j][k].power != gameArray[j][k-1].power && gameArray[j][k].power != 0){
@@ -170,8 +182,14 @@ function playGame(dir){
                     if(tile.power == 0 || j == 0) continue;
                     
                     for(let k = j-1; k >= 0; k--){
+                        if(gameArray[k+1][i].merged == true || gameArray[k][i].merged == true){
+                            gameArray[k+1][i].merged = false;
+                            gameArray[k][i].merged = true;
+                            continue;
+                        }
                         if(gameArray[k][i].power == gameArray[k+1][i].power){
                             gameArray[k][i].move(gameArray[k+1][i].power+1);
+                            gameArray[k][i].merged = true;
                             gameArray[k+1][i].update(0);
                         } else if(gameArray[k][i].power != gameArray[k+1][i].power && gameArray[k][i].power != 0){
                             gameArray[k+1][i].update(gameArray[k+1][i].power);
@@ -191,8 +209,14 @@ function playGame(dir){
                     if(tile.power == 0 || j == 3) continue;
                     
                     for(let k = j+1; k < 4; k++){
+                        if(gameArray[k-1][i].merged == true || gameArray[k][i].merged == true){
+                            gameArray[k-1][i].merged = false;
+                            gameArray[k][i].merged = true;
+                            continue;
+                        }
                         if(gameArray[k][i].power == gameArray[k-1][i].power){
                             gameArray[k][i].update(gameArray[k-1][i].power+1);
+                            gameArray[k][i].merged=true;
                             gameArray[k-1][i].update(0);
                         } else if(gameArray[k][i].power != gameArray[k-1][i].power && gameArray[k][i].power != 0){
                             gameArray[k-1][i].update(gameArray[k-1][i].power);
@@ -205,6 +229,13 @@ function playGame(dir){
                 }
             }
             break;
+    }
+
+    //unmerges all things
+    for(let i = 0; i < 4; i++){
+        for(let j = 0; j < 4; j++){
+            gameArray[j][i].merged = false;
+        }
     }
 
     //checks if you lost
